@@ -207,6 +207,35 @@
         rectangle = false; 
         circle = false;
       };
+        // Save canvas content to localStorage
+    const saveCanvasState = () => {
+    const canvasData = canvas.toDataURL();
+    localStorage.setItem("canvasState", canvasData);
+    };
+
+
+    const loadCanvasState = () => {
+    const canvasData = localStorage.getItem("canvasState");
+    if (canvasData) {
+        const img = new Image();
+        img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+        };
+        img.src = canvasData;
+    }
+    };
+    window.onload = () => {
+    loadCanvasState();
+    };
+
+
+    canvas.addEventListener("mousemove", (e) => {
+    if (drawing) {
+        
+        saveCanvasState(); 
+    }
+    });
+
     </script>
   </body>
 </html>
